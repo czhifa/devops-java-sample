@@ -4,4 +4,9 @@ WORKDIR /home
 
 COPY target/*.jar /home
 
+RUN echo 'Acquire::http::Proxy "http://192.168.159.125:10809";' > /etc/systemd/system/docker.service.d/http-proxy.conf && \
+echo 'Acquire::https::Proxy "http://192.168.159.125:10809";' >> /etc/systemd/system/docker.service.d/http-proxy.conf
+
+ENV http_proxy=http://192.168.159.125:10809 https_proxy=http://192.168.159.125:10809
+
 ENTRYPOINT java -jar *.jar
